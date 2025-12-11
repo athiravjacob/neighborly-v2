@@ -49,7 +49,7 @@ I kept adding categories without designing the database or APIs to support them 
 
 So I made the painful but right call:  
 Deleted the entire repo.  
-Started v2 with **one category (Cleaning)** — but designed from day 1 so I can add **plumbing, driving, teaching, caretaking, mechanic services** tomorrow with zero breaking changes.
+Started v2 with **one category (Cleaning)** — but designed from day 1 so I can add **handyman, teaching, caretaking** tomorrow with zero breaking changes.
 
 Now every piece is built on real system design:
 - Service catalog with `duration_slots` and `slotType`
@@ -67,7 +67,7 @@ Now building v2 the way real scalable products are built.
 - Fixed pricing through a **service catalog** (add 100 categories tomorrow → zero code change)  
 - Smart slot blocking: General cleaning = 1 slot, Deep cleaning = full day  
 - Weekly availability + exceptions (vacations, holidays)  
-- Future-proof for cleaning, plumbing, driving, tutoring, caretaking, mechanics...  
+- Future-proof for cleaning,handyman,packing help, tutoring, caretaking, mechanics...  
 - Clean architecture, TypeScript strict, proper API versioning  
 - Real money flow with deposit + balance after job  
 - Full admin panel for verification, disputes, earnings  
