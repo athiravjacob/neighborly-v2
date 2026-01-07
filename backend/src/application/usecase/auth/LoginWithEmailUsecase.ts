@@ -33,7 +33,10 @@ export class LoginWithEmailUsecase{
             throw new Error("You are blocked by the admin")
         }
         
-        const auth = user.getAuth()
+        const auth = user.getEmailAuth()
+        if (!auth) {
+            throw new Error("Email login not available for this account")
+          }
         const storedHash = auth.getPasswordHash()
 
         if(!storedHash) throw new Error("Invalid login method")

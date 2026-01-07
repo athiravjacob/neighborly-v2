@@ -1,3 +1,4 @@
+import { AuthProvider } from "../enums/AuthProvider"
 import { UserRole } from "../enums/UserRole"
 import { AuthCredentials } from "./AuthCredentials"
 
@@ -7,7 +8,7 @@ export class User{
     private readonly name:string ,
     private readonly email :string,
     private readonly role:UserRole,
-    private auth:AuthCredentials,
+    private readonly auth:AuthCredentials[],
     private blocked :boolean,
     private  phone?:string ,
 
@@ -20,9 +21,18 @@ export class User{
    block():void{
     this.blocked = true
    }
-   getAuth():AuthCredentials{
-    return this.auth
+   getEmailAuth():AuthCredentials|undefined{
+    return this.auth.find(a=>a.isEmail())
    }
+
+   getGoogleAuth():AuthCredentials|undefined{
+      return this.auth.find(a=>a.isGoogle())
+   }
+
+   hasProvider(provider:AuthProvider):boolean{
+      return this.auth.some(a=>a.getProvider()===provider)
+   }
+
 
    getId(): string {
     if (!this.id) {
@@ -44,7 +54,15 @@ export class User{
  }
 
  linkGoogleAccount(googleId:string):User{
-   const updatedAuth=this.auth.linkGoogle(googleId)
+   if (this.hasProvider(AuthProvider.GOOGLE)) {
+      throw new Error("Google account already linked")
+    }
+
+    const updatedAuth = [
+      ...this.auth,
+      AuthCredentials.google(googleId)
+    ]
+
    return new User(
       this.id,
       this.name,
@@ -54,20 +72,21 @@ export class User{
       this.blocked,
       this.phone
   );
+
  }
  
 
 
    static registerWithEmail(name:string,email:string,phone:string,passwordHash:string,role:UserRole.SEEKER |UserRole.HELPER):User{
-    return new User(null,name,email,role,AuthCredentials.email(passwordHash),false,phone)
+    return new User(null,name,email,role,[AuthCredentials.email(passwordHash)],false,phone)
 
    }
 
    static registerWithGoogle(name:string,email:string,googleId:string,role:UserRole.SEEKER |UserRole.HELPER,phone?:string):User{
-    return new User(null,name,email,role,AuthCredentials.google(googleId),false,phone)
+    return new User(null,name,email,role,[AuthCredentials.google(googleId)],false,phone)
 
    }
    static admin(name:string,email:string,phone:string,passwordHash:string,role:UserRole.ADMIN):User{
-    return new User(null,name,email,role,AuthCredentials.email(passwordHash),false,phone)
+    return new User(null,name,email,role,[AuthCredentials.email(passwordHash)],false,phone)
    }
 }
