@@ -6,10 +6,11 @@ export class User{
     private readonly id:string |null,
     private readonly name:string ,
     private readonly email :string,
-    private readonly phone :string,
     private readonly role:UserRole,
-    private readonly auth:AuthCredentials,
-    private blocked :boolean
+    private auth:AuthCredentials,
+    private blocked :boolean,
+    private  phone?:string ,
+
    ){}
 
    canLogin():boolean{
@@ -37,17 +38,36 @@ export class User{
  getRole(): UserRole {
     return this.role;
  }
+ addPhoneNumber(phone: string) {
+   if (this.phone) throw new Error("Phone already exists")
+   this.phone = phone
+ }
+
+ linkGoogleAccount(googleId:string):User{
+   const updatedAuth=this.auth.linkGoogle(googleId)
+   return new User(
+      this.id,
+      this.name,
+      this.email,
+      this.role,
+      updatedAuth,
+      this.blocked,
+      this.phone
+  );
+ }
+ 
+
 
    static registerWithEmail(name:string,email:string,phone:string,passwordHash:string,role:UserRole.SEEKER |UserRole.HELPER):User{
-    return new User(null,name,email,phone,role,AuthCredentials.email(passwordHash),false)
+    return new User(null,name,email,role,AuthCredentials.email(passwordHash),false,phone)
 
    }
 
-   static registerWithGoogle(name:string,email:string,phone:string,googleId:string,role:UserRole.SEEKER |UserRole.HELPER):User{
-    return new User(null,name,email,phone,role,AuthCredentials.google(googleId),false)
+   static registerWithGoogle(name:string,email:string,googleId:string,role:UserRole.SEEKER |UserRole.HELPER,phone?:string):User{
+    return new User(null,name,email,role,AuthCredentials.google(googleId),false,phone)
 
    }
    static admin(name:string,email:string,phone:string,passwordHash:string,role:UserRole.ADMIN):User{
-    return new User(null,name,email,phone,role,AuthCredentials.email(passwordHash),false)
+    return new User(null,name,email,role,AuthCredentials.email(passwordHash),false,phone)
    }
 }

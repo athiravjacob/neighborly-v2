@@ -1,9 +1,8 @@
-import { UserRole } from "../../../domain/enums/UserRole";
+import { SignupRole, UserRole } from "../../../domain/enums/UserRole";
 import {  IUserRepository } from "../../../domain/user/IUserRepository";
 import { User } from "../../../domain/user/User";
 import { IHashPassword } from "../../port/IHashPassword";
 
-type SignupRole = UserRole.HELPER | UserRole.SEEKER;
 
 type SignupWithEmailInput={
     name:string,
@@ -19,7 +18,7 @@ type SignupWithEmailOutput={
     role:SignupRole
 }
 
-function isSignupRole(role: UserRole): role is SignupRole {
+export function isSignupRole(role: UserRole): role is SignupRole {
   return role === UserRole.HELPER || role === UserRole.SEEKER;
 }
 

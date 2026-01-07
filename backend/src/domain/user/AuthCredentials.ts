@@ -19,6 +19,21 @@ export class AuthCredentials{
         return new AuthCredentials(AuthProvider.GOOGLE,undefined,googleId)
     }
 
+     linkGoogle(googleId:string):AuthCredentials{
+        if(this.isGoogle()) throw new Error("Google account already linked")
+
+        return new AuthCredentials(AuthProvider.GOOGLE,this.passwordHash,googleId)
+
+     }
+
+     isEmail():boolean{
+        return this.provider === "EMAIL"
+     }
+
+     isGoogle():boolean{
+        return this.provider === "GOOGLE"
+     }
+
     getProvider():AuthProvider{
         return this.provider
     }

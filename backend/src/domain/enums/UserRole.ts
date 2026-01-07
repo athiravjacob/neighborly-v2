@@ -3,3 +3,4 @@ export enum UserRole{
     HELPER ="HELPER",
     ADMIN ="ADMIN"
 }
+export type SignupRole = UserRole.HELPER | UserRole.SEEKER;
