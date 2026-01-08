@@ -89,4 +89,16 @@ export class User{
    static admin(name:string,email:string,phone:string,passwordHash:string,role:UserRole.ADMIN):User{
     return new User(null,name,email,role,[AuthCredentials.email(passwordHash)],false,phone)
    }
+
+   static rehydrate(
+      id:string,
+      name:string,
+      email:string,
+      role:UserRole,
+      auth:AuthCredentials[],
+      blocked:boolean,
+      phone?:string
+      ):User{
+         return new User(id,name,email,role,auth,blocked,phone)
+      }
 }
