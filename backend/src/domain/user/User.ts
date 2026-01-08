@@ -33,6 +33,9 @@ export class User{
       return this.auth.some(a=>a.getProvider()===provider)
    }
 
+   getName():string{
+      return this.name
+   }
 
    getId(): string {
     if (!this.id) {
@@ -53,6 +56,18 @@ export class User{
    this.phone = phone
  }
 
+ getAuth(): AuthCredentials[] {
+   return [...this.auth] 
+ }
+ 
+ isBlocked(): boolean {
+   return this.blocked
+ }
+ 
+ getPhone(): string | undefined {
+   return this.phone
+ }
+ 
  linkGoogleAccount(googleId:string):User{
    if (this.hasProvider(AuthProvider.GOOGLE)) {
       throw new Error("Google account already linked")
