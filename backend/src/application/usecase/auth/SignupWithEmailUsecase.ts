@@ -40,9 +40,9 @@ export class SignupWithEmailUsecase{
 
         const passwordHash = await this.hashPassword.hash(password)
         const user = User.registerWithEmail(name,email,phone,passwordHash,role)
-        await this.userRepository.save(user)
+        const savedUser = await this.userRepository.save(user)
         return {
-            id:user.getId(),
+            id:savedUser.getId(),
             email,
             role
 

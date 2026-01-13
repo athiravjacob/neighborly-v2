@@ -5,7 +5,7 @@ import { IAuthCredentials, UserModel } from "../schemas/UserSchema";
 import { AuthProvider } from "../../../../domain/enums/AuthProvider";
 import { AuthCredentials } from "../../../../domain/user/AuthCredentials";
 
-export class userRepository implements IUserRepository {
+export class UserRepositoryMongo implements IUserRepository {
   async save(user: User): Promise<User> {
       try {
         const phone = user.getPhone()

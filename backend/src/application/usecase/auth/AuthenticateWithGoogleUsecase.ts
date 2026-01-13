@@ -51,9 +51,9 @@ export class AuthenticateWithGoogleUsecase{
         }
 
         const user = User.registerWithGoogle(name,email,googleId,role,phone)
-        await this.userRepository.save(user)
+        const savedUser =await this.userRepository.save(user)
         return {
-            id: user.getId(),
+            id: savedUser .getId(),
             email,
             role
         }
