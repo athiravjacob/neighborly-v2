@@ -15,7 +15,8 @@ export const ErrorCatalog = {
     code: "VALIDATION_FAILED",
     message: "Validation failed",
     statusCode: 400
-  }
+  },
+  
 } as const;
 
 export type ErrorKey = keyof typeof ErrorCatalog;
