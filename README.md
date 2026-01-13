@@ -8,8 +8,8 @@ A scalable local service marketplace connecting people who need household help w
 
 | User            | Goal                                                                 |
 |-----------------|----------------------------------------------------------------------|
-| **Seeker**      | Find a trusted cleaner from nearby current location , book in 2 clicks, pay deposit and balance only after satisfied |
-| **Helper**      | Set weekly slots,set location and services , get paid fairly | 
+| **Seeker**      | Find a trusted cleaner from nearby current location , book from available helpers, pay amount ,chat with helpers and rate helpers after task completion |
+| **Helper**      | Set weekly slots,set location and services , get paid fairly after completion of task | 
 | **Admin (me)**  | Verify helpers, resolve disputes, see earnings, edit prices         | 
 
 ### Core User Stories 
@@ -18,11 +18,11 @@ A scalable local service marketplace connecting people who need household help w
 |---|-----------------------------|------------------------------------------------------------------------------|-----------------------------------------|
 | 1 | Seeker                      | Register/login with email or Google                                           | Start booking fast                      |
 | 2 | Seeker                      | Choose General or Deep cleaning + BHK → see fixed price                      | No confusion                            |
-| 3 | Seeker                      | Book a helper for a specific date + slot → pay deposit                      | Slot is reserved                        |
+| 3 | Seeker                      | Book a helper for a specific date + slot → pay full amount                      | Slot is reserved                        |
 | 4 | Helper                      | Set weekly availability (morning/afternoon/full-day per service)            | I control my schedule                   |
 | 5 | Helper                      | Accept/reject requests within 24 h                                           | I only take jobs I want                 |
 | 6 | Both                        | Auto full refund if helper rejects or ignores 24 h                           | Trust                                   |
-| 7 | Seeker                      | Mark “Satisfied” → pay balance or “Not satisfied” → full refund + dispute   | I’m protected                           |
+| 7 | Seeker                      | Mark “Satisfied”  or “Not satisfied” → full refund + dispute   | I’m protected                           |
 | 8 | Helper                      | Get paid only after seeker clicks “Satisfied”                                | No free work                            |
 | 9 | Admin                       | Verify helpers, resolve disputes, see earnings, edit prices                 | Platform stays healthy                  |
 
