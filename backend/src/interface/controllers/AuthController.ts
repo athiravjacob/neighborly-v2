@@ -6,11 +6,13 @@ import { validateRequest } from "../validators/validateRequest";
 import { signupWithEmailSchema } from "../validators/signupWithEmail.schema";
 import { handleError } from "../errors/handleError";
 import { loginWithEmailSchema } from "../validators/loginWithEmail.schema";
+import { authenticateWithGoogleSchema } from "../validators/authenticateWithGoogle.schema";
 
 export class AuthController{
     constructor(
         private signupWithEmailUsecase:SignupWithEmailUsecase,
-        private loginwithEmailUsecase:LoginWithEmailUsecase
+        private loginwithEmailUsecase:LoginWithEmailUsecase,
+        private authenticateWithGoogleUsecase:AuthenticateWithGoogleUsecase
     ){}
 
     async signupWithEmail(req:Request,res:Response){
@@ -27,14 +29,24 @@ export class AuthController{
     async loginWithEmail(req:Request,res:Response){
       try {
         const input = validateRequest(loginWithEmailSchema,req.body)
-        const userDTO = await this.loginwithEmailUsecase.execute(input)
-        return res.status(201).json(userDTO);
+        const authResult = await this.loginwithEmailUsecase.execute(input)
+        return res.status(200).json(authResult);
 
       } catch (error) {
-        
+        return handleError(error, res);
       }
     }
 
+    async authenticateWithGoogle(req:Request,res:Response){
+      try {
+        const {idToken,role} = validateRequest(authenticateWithGoogleSchema,req.body)
+        const authResult = await this.authenticateWithGoogleUsecase.execute({ idToken,role });
+        return res.status(200).json(authResult)
+
+      } catch (error) {
+        return handleError(error, res);
+      }
+    }
     
     
 

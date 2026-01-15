@@ -16,6 +16,11 @@ export const ErrorCatalog = {
     message: "Validation failed",
     statusCode: 400
   },
+  FORBIDDEN:{
+    code:"BLOCKED",
+    message:"You are blocked by admin",
+    statusCode:403
+  }
   
 } as const;
 

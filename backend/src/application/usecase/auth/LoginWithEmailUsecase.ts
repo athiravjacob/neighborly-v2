@@ -1,5 +1,8 @@
 import { UserRole } from "../../../domain/enums/UserRole";
 import { IUserRepository } from "../../../domain/user/IUserRepository";
+import { REFRESH_TOKEN_TTL } from "../../config/auth.config";
+import { AppError } from "../../errors/AppError";
+import { ErrorCatalog } from "../../errors/ErrorCatalog";
 import {  IHasher } from "../../port/IHasher";
 import { IJwtServices } from "../../port/IJwtServices";
 import { IRefreshTokenRepository } from "../../port/IRefreshTokenRepository";
@@ -24,14 +27,12 @@ export class LoginWithEmailUsecase {
 
   async execute(input: LoginWithEmailInput): Promise<LoginWithEmailOutput> {
     const { email, password } = input;
-    //move to infrastructure/config/jwt later
-    const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60 * 1000;
-
+    
     const user = await this.userRepository.findByEmail(email);
-    if (!user) throw new Error("Invalid email or password");
+    if (!user) throw new AppError(ErrorCatalog.INVALID_CREDENTIALS);
 
     if (!user.canLogin()) {
-      throw new Error("You are blocked by the admin");
+      throw new AppError(ErrorCatalog.FORBIDDEN);
     }
 
     const auth = user.getEmailAuth();
@@ -43,7 +44,7 @@ export class LoginWithEmailUsecase {
     if (!storedHash) throw new Error("Invalid login method");
 
     const isValid = await this.hasher.verify(password, storedHash);
-    if (!isValid) throw new Error("Invalid credentials");
+    if (!isValid) throw new AppError(ErrorCatalog.INVALID_CREDENTIALS);
 
     const accessToken = await this.jwtServices.generateAccessToken({
       userId: user.getId(),
