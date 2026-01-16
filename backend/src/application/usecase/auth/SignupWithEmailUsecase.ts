@@ -1,6 +1,6 @@
 import { SignupRole, UserRole } from "../../../domain/enums/UserRole";
-import { IUserRepository } from "../../../domain/user/IUserRepository";
-import { User } from "../../../domain/user/User";
+import { IUserRepository } from "../../../domain/entities/user/IUserRepository";
+import { User } from "../../../domain/entities/user/User";
 import { AppError } from "../../errors/AppError";
 import { ErrorCatalog } from "../../errors/ErrorCatalog";
 import { IHasher } from "../../port/IHasher";

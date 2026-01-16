@@ -1,9 +1,9 @@
 import { UserRole } from "../../../domain/enums/UserRole";
-import { IUserRepository } from "../../../domain/user/IUserRepository";
+import { IUserRepository } from "../../../domain/entities/user/IUserRepository";
 import { REFRESH_TOKEN_TTL } from "../../config/auth.config";
 import { AppError } from "../../errors/AppError";
 import { ErrorCatalog } from "../../errors/ErrorCatalog";
-import {  IHasher } from "../../port/IHasher";
+import { IHasher } from "../../port/IHasher";
 import { IJwtServices } from "../../port/IJwtServices";
 import { IRefreshTokenRepository } from "../../port/IRefreshTokenRepository";
 
@@ -27,7 +27,7 @@ export class LoginWithEmailUsecase {
 
   async execute(input: LoginWithEmailInput): Promise<LoginWithEmailOutput> {
     const { email, password } = input;
-    
+
     const user = await this.userRepository.findByEmail(email);
     if (!user) throw new AppError(ErrorCatalog.INVALID_CREDENTIALS);
 
