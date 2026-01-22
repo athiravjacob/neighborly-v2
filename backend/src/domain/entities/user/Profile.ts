@@ -1,7 +1,7 @@
-import { AddressVO } from "./AddressVO";
+import { AddressVO } from "../../valueObjects/AddressVO";
 import { User } from "./User";
 
-export class UserProfile{
+export class Profile{
     private constructor(
         private readonly id:string,
         private readonly userId:string,
@@ -17,8 +17,26 @@ export class UserProfile{
         return this.userId
     }
 
-    static create(id:string,userId:string):UserProfile{
-        return new UserProfile(id,userId)
+    getDob():Date|undefined{
+        return this.dob
+    }
+    getAddress():AddressVO|undefined{
+        return this.address
+    }
+    getProfilePictureUrl():string|undefined{
+        return this.profilePictureUrl
+    }
+
+    
+    static create(userId:string):Profile{
+        return new Profile(
+        undefined as any, 
+        userId,
+        undefined,
+        undefined,
+        undefined,
+        new Date(),
+        new Date())
     }
 
     isProfileComplete():boolean{
@@ -51,4 +69,24 @@ export class UserProfile{
     touch():void{
         this.updatedAt = new Date()
     }
+
+  static rehydrate(props: {
+    id: string;
+    userId: string;
+    dob?: Date | undefined;
+    address?: AddressVO | undefined;
+    profilePictureUrl?: string | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+  }): Profile {
+    return new Profile(
+      props.id,
+      props.userId,
+      props.dob,
+      props.address,
+      props.profilePictureUrl,
+      props.createdAt,
+      props.updatedAt
+    );
+  }
 }

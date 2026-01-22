@@ -1,20 +1,12 @@
 import nodemailer, { Transporter } from "nodemailer";
 import { IEmailService } from "../../application/port/IEmailService";
+import { emailTransporter } from "../config/email.config";
 
 export class NodemailerEmailService implements IEmailService {
-  private transporter: Transporter;
 
-  constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: false, // TLS
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-  }
+  constructor(
+    private readonly transporter: Transporter = emailTransporter
+  ) {}
 
   async sendResetPasswordEmail(
     to: string,

@@ -1,5 +1,5 @@
 import { SignupRole, UserRole } from "../../../domain/enums/UserRole";
-import { IUserRepository } from "../../../domain/entities/user/IUserRepository";
+import { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { User } from "../../../domain/entities/user/User";
 import { REFRESH_TOKEN_TTL } from "../../config/auth.config";
 import { IGoogleTokenVerifier } from "../../port/IGoogleTokenVerifier";

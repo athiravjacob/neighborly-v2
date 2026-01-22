@@ -1,5 +1,5 @@
 import { UserRole } from "../../../domain/enums/UserRole";
-import { IUserRepository } from "../../../domain/entities/user/IUserRepository";
+import { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { REFRESH_TOKEN_TTL } from "../../config/auth.config";
 import { AppError } from "../../errors/AppError";
 import { ErrorCatalog } from "../../errors/ErrorCatalog";

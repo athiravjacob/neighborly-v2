@@ -1,6 +1,6 @@
 import { AuthProvider } from "../../enums/AuthProvider";
 import { UserRole } from "../../enums/UserRole";
-import { AuthCredentials } from "./AuthCredentials";
+import { AuthCredentials } from "../../valueObjects/AuthCredentials";
 
 export class User {
   private constructor(
@@ -21,8 +21,8 @@ export class User {
     this.blocked = true;
   }
   hasId(): boolean {
-   return this.id !== null;
- }
+    return this.id !== null;
+  }
   getEmailAuth(): AuthCredentials | undefined {
     return this.auth.find((a) => a.isEmail());
   }

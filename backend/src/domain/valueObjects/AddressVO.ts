@@ -1,3 +1,11 @@
+
+export type AddressPrimitive = {
+    line1: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
+  
 export class AddressVO{
     constructor(
         private readonly line1:string,
@@ -12,4 +20,13 @@ export class AddressVO{
         return Boolean(this.line1 === other.line1 && this.city === other.city && this.state === other.state && this.pincode === other.pincode )
     }
 
+    toPrimitives():AddressPrimitive{
+        return {
+            line1:this.line1,
+            city:this.city,
+            state:this.state,
+            pincode:this.pincode
+        }
+
+    }
 }

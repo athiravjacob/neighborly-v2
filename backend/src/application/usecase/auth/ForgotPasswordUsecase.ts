@@ -1,5 +1,5 @@
 import { AuthProvider } from "../../../domain/enums/AuthProvider";
-import { IUserRepository } from "../../../domain/entities/user/IUserRepository";
+import { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { IEmailService } from "../../port/IEmailService";
 import { IResetPasswordTokenRepository } from "../../port/IResetPasswordTokenRepository";
 import crypto from "crypto";
@@ -10,7 +10,7 @@ export class ForgotPasswordUsecase {
   constructor(
     private userRepository: IUserRepository,
     private resetPasswordTokenRepository: IResetPasswordTokenRepository,
-    private emailService:IEmailService,
+    private emailService: IEmailService,
     private frontendBaseUrl: string
   ) {}
 
@@ -22,15 +22,12 @@ export class ForgotPasswordUsecase {
       throw new Error("Account blocked, you cannot reset password");
 
     const token = crypto.randomBytes(32).toString("hex");
-    const tokenHash = crypto
-    .createHash("sha256")
-    .update(token)
-    .digest("hex");  
+    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
     this.resetPasswordTokenRepository.save(user.getId(), tokenHash, expiresAt);
     const resetLink = `${this.frontendBaseUrl}/reset-password?token=${token}`;
-    await this.emailService.sendResetPasswordEmail(user.getEmail(),resetLink)
+    await this.emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
 
     return {
       messsage: "Reset link sent to the email",
