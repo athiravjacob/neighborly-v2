@@ -5,8 +5,8 @@ import { Profile } from "../../../domain/entities/user/Profile";
 
 type updatePersonalDetailsInput = {
   userId: string;
-  dob?: Date;
-  address?: { line1: string; city: string; state: string; pincode: string };
+  dob?: Date|undefined;
+  address?: { line1: string; city: string; state: string; pincode: string }|undefined;
 };
 
 type updatePersonalDetailsOutput={
