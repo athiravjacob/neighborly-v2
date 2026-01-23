@@ -1,4 +1,3 @@
-import { TokenInfo } from "google-auth-library"
 
 export interface IResetPasswordTokenRepository{
     save(userId:string,tokenHash:string,expiresAt:Date):Promise<void>

@@ -1,4 +1,4 @@
-import { AuthProvider } from "../../enums/AuthProvider";
+import { AuthProvider } from "../enums/AuthProvider";
 
 export class AuthCredentials {
   private constructor(
