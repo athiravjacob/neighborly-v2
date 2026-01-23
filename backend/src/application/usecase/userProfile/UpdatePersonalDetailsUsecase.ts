@@ -1,26 +1,30 @@
 import { AddressVO } from "../../../domain/valueObjects/AddressVO";
 import { IFileStorage } from "../../port/IFileStorage";
 import { IProfileRepository } from "../../../domain/repositories/IProfileRepository";
+import { Profile } from "../../../domain/entities/user/Profile";
 
-type upsertProfileInput = {
+type updatePersonalDetailsInput = {
   userId: string;
   dob?: Date;
   address?: { line1: string; city: string; state: string; pincode: string };
-  profilePicture?: {
-    buffer: Buffer;
-    
-  };
 };
-export class UpsertProfileUsecase {
+
+type updatePersonalDetailsOutput={
+  userId:string;
+  dob: Date|undefined;
+  address: { line1: string; city: string; state: string; pincode: string }|undefined;
+
+}
+
+export class UpdatePersonalDetailsUsecase {
   constructor(
     private userProfileRepo: IProfileRepository,
-    private fileStorage: IFileStorage
   ) {}
 
-  async execute(input: upsertProfileInput): Promise<void> {
+  async execute(input: updatePersonalDetailsInput): Promise<updatePersonalDetailsOutput> {
     let profile = await this.userProfileRepo.findProfileByUserId(input.userId);
     if (!profile) {
-      profile = await this.userProfileRepo.create(input.userId);
+      throw new Error("Profile not found"); 
     }
 
     if (input.dob) {
@@ -35,15 +39,11 @@ export class UpsertProfileUsecase {
       );
       profile.updateAddress(address);
     }
-
-    if (input.profilePicture) {
-      const imageUrl = await this.fileStorage.uploadProfileImage(
-        input.profilePicture.buffer,
-        `${input.userId}-${Date.now()}`
-      );
-      profile.updateProfilePictureUrl(imageUrl);
+    profile =await this.userProfileRepo.update(profile)
+    return {
+      userId:profile.getUserId(),
+      dob:profile.getDob(),
+      address:profile.getAddress()?profile.getAddress()?.toPrimitives():undefined
     }
-
-    await this.userProfileRepo.update(profile)
   }
 }
