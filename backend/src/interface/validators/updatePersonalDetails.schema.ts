@@ -3,10 +3,12 @@ import { z } from "zod";
 export const updatePersonalDetailsSchema = z
   .object({
     dob: z
-      .string()
-      .datetime()
-      .optional()
-      .transform((val) => (val ? new Date(val) : undefined)),
+  .string()
+  .refine((val) => !val || !isNaN(Date.parse(val)), {
+    message: "dob must be a valid date string",
+  })
+  .optional()
+  .transform((val) => (val ? new Date(val) : undefined)),
 
     address: z
       .object({
