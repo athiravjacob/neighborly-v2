@@ -1,7 +1,7 @@
 import { domainToASCII } from "url";
 import { IUserRepository } from "../../../../domain/repositories/IUserRepository";
 import { User } from "../../../../domain/entities/user/User";
-import { IAuthCredentials, UserModel } from "../schemas/UserSchema";
+import { IAuthCredentials, UserModel } from "../schemas/user/UserSchema";
 import { AuthProvider } from "../../../../domain/enums/AuthProvider";
 import { AuthCredentials } from "../../../../domain/valueObjects/AuthCredentials";
 import { UserRole } from "../../../../domain/enums/UserRole";

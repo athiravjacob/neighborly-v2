@@ -1,5 +1,5 @@
 import { IRefreshTokenRepository } from "../../../../application/port/IRefreshTokenRepository";
-import { RefreshTokenModel } from "../schemas/RefreshTokenSchema";
+import { RefreshTokenModel } from "../schemas/user/RefreshTokenSchema";
 
 export  class RefreshTokenRepositoryMongo implements IRefreshTokenRepository{
     async save(input:{userId:string, tokenHash:string, expiresAt:Date }) {

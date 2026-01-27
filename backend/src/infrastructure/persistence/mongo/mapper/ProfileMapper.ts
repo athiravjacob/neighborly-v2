@@ -1,7 +1,6 @@
 import { Profile } from "../../../../domain/entities/user/Profile";
 import { AddressVO } from "../../../../domain/valueObjects/AddressVO";
-import { ProfileDocument } from "../schemas/ProfileSchema";
-
+import { ProfileDocument } from "../schemas/user/ProfileSchema";
 
 export type ProfilePersistence = {
   userId: string;
@@ -17,8 +16,8 @@ export type ProfilePersistence = {
   updatedAt?: Date;
 };
 
-export class ProfileMapper{
-  static toDomain(doc:ProfileDocument):Profile{
+export class ProfileMapper {
+  static toDomain(doc: ProfileDocument): Profile {
     return Profile.rehydrate({
       id: doc._id.toString(),
       userId: doc.userId.toString(),
@@ -42,22 +41,21 @@ export class ProfileMapper{
     const persistence: ProfilePersistence = {
       userId: profile.getUserId(),
     };
-  
+
     const dob = profile.getDob();
     if (dob !== undefined) {
       persistence.dob = dob;
     }
-  
+
     const profilePictureUrl = profile.getProfilePictureUrl();
     if (profilePictureUrl !== undefined) {
       persistence.profilePictureUrl = profilePictureUrl;
     }
-  
+
     if (address !== undefined) {
       persistence.address = address.toPrimitives();
     }
-  
+
     return persistence;
   }
 }
-  

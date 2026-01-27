@@ -1,5 +1,5 @@
 import { IResetPasswordTokenRepository } from "../../../../application/port/IResetPasswordTokenRepository";
-import { ResetTokenModel } from "../schemas/ResetTokenSchema";
+import { ResetTokenModel } from "../schemas/user/ResetTokenSchema";
 
 export  class ResetTokenRepositoryMongo implements IResetPasswordTokenRepository{
     async deleteToken(tokenHash: string): Promise<void> {
