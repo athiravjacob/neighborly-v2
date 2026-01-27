@@ -27,7 +27,7 @@ const AddressSchema = new Schema(
 const ProfileSchema = new Schema<ProfileDocument>(
   {
     userId: {
-      type: String,
+      type: String,  // Change it to object of User foreign key
       required: true,
       unique: true, 
       index: true,
