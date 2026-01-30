@@ -4,18 +4,49 @@ export class Service{
     private categories:ServiceCategory[]=[]
     private constructor(
         private readonly id:string|null,
-        private name:string,
+        private serviceName:string,
         private description:string,
         private imageUrl:string,
         private isActive:boolean=true
     ){}
+
+    getId():string{
+      if(!this.id) throw new Error("Service not yet persisted")
+      return this.id
+    }
+
+    getServiceName():string{
+      return this.serviceName
+    }
+
+    getDescription():string{
+      return this.description
+    }
+
+    getImage():string{
+      return this.imageUrl
+    }
     
-    static create(name:string,description:string,imageUrl:string):Service{
-        return new Service(null,name,description,imageUrl,true)
+     activeStatus():boolean{
+      return this.isActive
+    }
+    static create(serviceName:string,description:string,imageUrl:string):Service{
+        if (!serviceName.trim()) {
+            throw new Error("Service name cannot be empty");
+          }
+          if (!description.trim()) {
+            throw new Error("Service description cannot be empty");
+          }
+          if (!imageUrl.trim()) {
+            throw new Error("Service imageUrl cannot be empty");
+          }
+        return new Service(null,serviceName,description,imageUrl,true)
     }
 
     addCategory(category:ServiceCategory){
-        this.categories.push(category)
+        if (this.categories.some(c => c.hasSameName(category.getCategoryName()))) {
+            throw new Error("Category name must be unique within this service");
+          }        this.categories.push(category)
     }
     activate(){
          this.isActive = true
@@ -23,5 +54,10 @@ export class Service{
     deactivate(){
         this.isActive = false
     }
+
+    static rehydrate(id:string,serviceName:string,description:string,imageUrl:string,isActive:boolean):Service{
+        return new Service(id,serviceName,description,imageUrl,isActive)
+    }
 }
 
+ 

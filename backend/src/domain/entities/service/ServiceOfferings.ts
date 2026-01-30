@@ -3,7 +3,8 @@ import { ServiceType } from "../../enums/ServiceType";
 // The offering represents the "bookable thing"
 export class ServiceOffering {
     private constructor(
-      private readonly id: string|null,       
+      private readonly id: string|null,  
+      private serviceId:string,     
       private categoryId: string, 
       private price: number,     
       private type: ServiceType,       
@@ -14,14 +15,24 @@ export class ServiceOffering {
   
     // Use create() for new offering (no ID yet)
     static create( 
+      serviceId:string,
       categoryId: string,
       price: number,
       type: ServiceType,
       variantId?: string,
       durationInMinutes?: number,
     ): ServiceOffering {
+
+      if(type=== ServiceType.FIXED)
+{
+  if (price <= 0) throw new Error("Price must be positive");
+  if (durationInMinutes! <= 0) throw new Error("Duration must be positive");
+
+}
+     
       return new ServiceOffering(
         null,
+        serviceId,
         categoryId,
         price,
         type,
@@ -31,26 +42,7 @@ export class ServiceOffering {
       );
     }
   
-    // Use rehydrate() for DB-loaded offering (with ID)
-    static rehydrate(props: {
-      id: string;
-      categoryId: string;
-      variantId?: string;
-      price: number;
-      durationInMinutes?: number;
-      type: ServiceType;
-      isActive: boolean;
-    }): ServiceOffering {
-      return new ServiceOffering(
-        props.id,
-        props.categoryId,
-        props.price,
-        props.type,
-        props.variantId,
-        props.durationInMinutes,
-        props.isActive
-      );
-    }
+    
   
     deactivate() {
       this.isActive = false;

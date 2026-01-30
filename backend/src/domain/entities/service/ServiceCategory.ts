@@ -7,24 +7,35 @@ export class ServiceCategory{
     private offerings:ServiceOffering[]=[]
     private constructor(
         private readonly id:string|null,
-        private name:string,
+        private categoryName:string,
         private type:ServiceType,
         private inclusion:string[],
         private exclusion:string[],
         public isActive:boolean=true
     ){}
 
-    static create(name:string,type:ServiceType,inclusion:string[],exclusion:string[]):ServiceCategory{
-        return new ServiceCategory(null,name,type,inclusion,exclusion,true)
-
+    static create(categoryName:string,type:ServiceType,inclusion:string[],exclusion:string[]):ServiceCategory{
+      if (!categoryName.trim()) throw new Error("Category name required");
+      if (!Object.values(ServiceType).includes(type)) throw new Error("Invalid service type");
+      return new ServiceCategory(null, categoryName, type, inclusion, exclusion);
     }
 
     addVariant(variant: ServiceVariant) {
-        this.variants.push(variant);
+      if (this.variants.some(v => v.hasSameName( variant.getName()))) {
+        throw new Error("Variant name must be unique within category");
       }
+      this.variants.push(variant);      }
     
       addOffering(offering: ServiceOffering) {
         this.offerings.push(offering);
+      }
+
+      hasSameName(name: string): boolean {
+        return this.categoryName === name;
+      }
+    
+      getCategoryName(): string {
+        return this.categoryName;
       }
 }
 

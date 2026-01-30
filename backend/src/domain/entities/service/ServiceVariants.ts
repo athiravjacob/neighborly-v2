@@ -6,5 +6,13 @@ export class ServiceVariant{
         private name:string,
         public isActive:boolean=true
     ){}
+
+    getName(){
+        return this.name
+    }
+
+    hasSameName(name:string):boolean{
+        return this.name === name
+    }
 }
 

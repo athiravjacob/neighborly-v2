@@ -3,7 +3,7 @@ import { ServiceType } from "../../../../../domain/enums/ServiceType";
 
 const VariantSchema = new Schema(
     {
-      name: {
+      varieantName: {
         type: String,
         required: true
       },
@@ -20,7 +20,7 @@ const VariantSchema = new Schema(
 
 const CategorySchema = new Schema({
     
-    name:{
+    categoryName:{
         type:String,
         required:true,
     },
@@ -48,7 +48,7 @@ const CategorySchema = new Schema({
 
 
 const ServiceSchema = new Schema({
-    name:{
+  serviceName:{
         type:String,
         required:true,
         unique:true,
