@@ -4,6 +4,11 @@ import { ServiceMapper } from "../mapper/ServiceMapper";
 import { ServiceModel } from "../schemas/service/ServiceSchema";
 
 export class ServiceRepositoryMongo implements IServiceRepository{
+   async findById(seviceId: string): Promise<Service> {
+        const service = await ServiceModel.findById(seviceId)
+        if(!service) throw new Error("Invalid service id or doesnot exist")
+        return ServiceMapper.toDomain(service)
+    }
    async existsByName(serviceName: string): Promise<boolean> {
     const exists = await ServiceModel.findOne({serviceName})
     if(exists) return true

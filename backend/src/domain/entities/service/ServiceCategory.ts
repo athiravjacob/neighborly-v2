@@ -3,21 +3,26 @@ import { ServiceOffering } from "./ServiceOfferings";
 import { ServiceVariant } from "./ServiceVariants";
 
 export class ServiceCategory{
-    private variants:ServiceVariant[]=[]
-    private offerings:ServiceOffering[]=[]
+    private variants:ServiceVariant[]
+    private offerings:ServiceOffering[]
     private constructor(
         private readonly id:string|null,
         private categoryName:string,
         private type:ServiceType,
         private inclusion:string[],
         private exclusion:string[],
-        public isActive:boolean=true
-    ){}
+        public isActive:boolean=true,
+        variants:ServiceVariant[],
+        offerings:ServiceOffering[]
+    ){
+      this.variants=variants;
+      this.offerings=offerings
+    }
 
-    static create(categoryName:string,type:ServiceType,inclusion:string[],exclusion:string[]):ServiceCategory{
+    static create(categoryName:string,type:ServiceType,inclusion:string[],exclusion:string[],isActive:boolean):ServiceCategory{
       if (!categoryName.trim()) throw new Error("Category name required");
       if (!Object.values(ServiceType).includes(type)) throw new Error("Invalid service type");
-      return new ServiceCategory(null, categoryName, type, inclusion, exclusion);
+      return new ServiceCategory(null, categoryName, type, inclusion, exclusion,isActive,[],[]);
     }
 
     addVariant(variant: ServiceVariant) {
@@ -37,5 +42,10 @@ export class ServiceCategory{
       getCategoryName(): string {
         return this.categoryName;
       }
+
+      static rehydrate(id:string,categoryName:string,type:ServiceType,inclusion:string[],exclusion:string[],isActive:boolean,variants:ServiceVariant[],offerings:ServiceOffering[]):ServiceCategory{
+        return new ServiceCategory(id,categoryName,type,inclusion,exclusion,isActive,variants,offerings)
+    }
+
 }
 

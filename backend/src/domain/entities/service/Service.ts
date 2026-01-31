@@ -1,14 +1,15 @@
 import { ServiceCategory } from "./ServiceCategory"
 
 export class Service{
-    private categories:ServiceCategory[]=[]
+    private categories:ServiceCategory[]
     private constructor(
         private readonly id:string|null,
         private serviceName:string,
         private description:string,
         private imageUrl:string,
-        private isActive:boolean=true
-    ){}
+        private isActive:boolean=true,
+        categories:ServiceCategory[]
+    ){this.categories=categories}
 
     getId():string{
       if(!this.id) throw new Error("Service not yet persisted")
@@ -40,7 +41,7 @@ export class Service{
           if (!imageUrl.trim()) {
             throw new Error("Service imageUrl cannot be empty");
           }
-        return new Service(null,serviceName,description,imageUrl,true)
+        return new Service(null,serviceName,description,imageUrl,true,[])
     }
 
     addCategory(category:ServiceCategory){
@@ -55,8 +56,8 @@ export class Service{
         this.isActive = false
     }
 
-    static rehydrate(id:string,serviceName:string,description:string,imageUrl:string,isActive:boolean):Service{
-        return new Service(id,serviceName,description,imageUrl,isActive)
+    static rehydrate(id:string,serviceName:string,description:string,imageUrl:string,isActive:boolean,categories:ServiceCategory[]):Service{
+        return new Service(id,serviceName,description,imageUrl,isActive,categories)
     }
 }
 
