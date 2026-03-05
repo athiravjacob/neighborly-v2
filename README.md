@@ -1,8 +1,17 @@
 # Neighborly v2
 
+
 A scalable local service marketplace connecting people who need household help with trusted local helpers.
 
 **v2 rebuild started December 2025** — learning from every mistake in v1.
+
+### Neighborly v1
+
+The first version of Neighborly helped validate the idea and exposed several architectural mistakes.
+
+Neighborly v2 is a **complete rebuild with better planning, database design, and scalable backend architecture.**
+
+🔗 View Neighborly v1: https://github.com/athiravjacob/neighborly_backend
 
 ### Who uses Neighborly?
 
